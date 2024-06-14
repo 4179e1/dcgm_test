@@ -9,8 +9,15 @@ make
 # Fetch the instant power usage
 
 ```
+time ./dcgm_test [loopIntervalUsec] [loopDurationUsec] [loops] > result.csv
+#or with default values
 time ./dcgm_test > result.csv
 ```
+
+Default values:
+- loopIntervalUsec = 1000, or 1 millesecond : Frequency of DCGM sampling
+- loopDurationUsec = 1000000, or 1 second : The frequency we are going to pull the data
+- loops = 2 : number of loopDurationUsec
 
 Note: make sure you have DCGM running `systemctl status nvidia-dcgm`
 

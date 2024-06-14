@@ -2,18 +2,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <unistd.h>
-
 #include <dlfcn.h>
+
 #include "dcgm_agent.h"
 #include "dcgm_structs.h"
 #include "dcgm_errors.h"
-#include "stdlib.h"
 
-/*
-#include "dcgm_agent.h"
-#include "dcgm_fields.h"
-#include "dcgm_structs.h"
-*/
 
 int myCallback(dcgm_field_entity_group_t entityGroupId, dcgm_field_eid_t entityId, dcgmFieldValue_v1 *values, int numValues, void *userData)
 {
@@ -38,6 +32,16 @@ int main(int argc, char *argv[])
     long long loopDurationUsec = 1000000; // 1 second
     // number of loops
     int loops = 2;
+    if (argc >= 2) {
+        loopIntervalUsec = strtoll(argv[1], NULL, 10);
+        if (argc >= 3) {
+            loopDurationUsec = strtoll(argv[2], NULL, 10);
+            if (argc >= 4) {
+                loops = strtol(argv[3], NULL, 10);
+            }
+        }
+    }
+    fprintf(stderr, "loopIntervalUsec %lld, loopDurationUsec %lld, loops %d\n", loopIntervalUsec, loopDurationUsec, loops);
 
     result = dcgmInit();
 
@@ -78,7 +82,8 @@ int main(int argc, char *argv[])
     }
     //printf("Field group id %ld\n", fieldGroupId);
 
-    result = dcgmWatchFields(dcgmHandle, gpuGroupId, fieldGroupId, loopIntervalUsec, 60.0, 0);
+    double ttl = (double)(loops * (loopDurationUsec / 1000000) + 1);
+    result = dcgmWatchFields(dcgmHandle, gpuGroupId, fieldGroupId, loopIntervalUsec, ttl, 0);
     // Check result to see if DCGM operation was successful.
     if (result != DCGM_ST_OK)
     {
