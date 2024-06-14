@@ -15,7 +15,7 @@ int myCallback(dcgm_field_entity_group_t entityGroupId, dcgm_field_eid_t entityI
     {
         dcgmFieldValue_v1 *v = &values[i];
         assert(v->fieldType == DCGM_FT_DOUBLE);
-        printf("%d,%.02f\n", entityId, v->value.dbl);
+        printf("%d,%ld,%.02f\n", entityId, v->ts, v->value.dbl);
     }
     return 0;
 }
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     }
 
     long long sinceTimestamp = 0;
-    printf("GPUId,Watts\n");
+    printf("GPUId,TimeStampUs,Watts\n");
     for (;loops > 0; loops--)
     {
         usleep(loopDurationUsec);

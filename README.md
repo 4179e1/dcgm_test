@@ -23,13 +23,7 @@ Note: make sure you have DCGM running `systemctl status nvidia-dcgm`
 
 # Plot the data
 
-```
-python myplot.py result.csv result.png
-```
-
-It generates the figure `result.png`
-
-Or you can directly execut and view it from the plot.ipynb
+Run the `plot.ipynb`
 
 
 # Issues
