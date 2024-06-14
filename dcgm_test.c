@@ -90,14 +90,16 @@ int main(int argc, char *argv[])
     printf("GPUId,Watts\n");
     for (;loops > 0; loops--)
     {
+        usleep(loopDurationUsec);
         result = dcgmGetValuesSince_v2(dcgmHandle, gpuGroupId, fieldGroupId, sinceTimestamp, &sinceTimestamp, myCallback, NULL);
         if (result != DCGM_ST_OK)
         {
             fprintf(stderr, "Error in dcgmGetValuesSince_v2 %d\n", result);
             exit(1);
         }
-        usleep(loopDurationUsec);
     }
+    // another sleep to allow the callbacks to execute. 
+    usleep(loopDurationUsec);
 
     return 0;
 }

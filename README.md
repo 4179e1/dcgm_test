@@ -27,7 +27,7 @@ Or you can directly execut and view it from the plot.ipynb
 
 # Issues
 
-Looks like the resolution of `DCGM_FI_DEV_POWER_USAGE_INSTANT` is 100 milliseconds.
-Approximately 21 samples can be captured in 2 seconds.
+Looks like the highest resolution of `DCGM_FI_DEV_POWER_USAGE_INSTANT` is 50 milliseconds, even if `loopIntervalUsec` were set to 1 millesecond.
+For example, approximately 42 samples can be captured in 2 seconds.
 
 ![](./result.png)
